@@ -2,12 +2,10 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../model/user");
-const { loginValidation } = require("../validation");
+const { loginValidationRules, validate } = require("../validation");
 const auth = require("../middlewares/verifyToken");
 
-router.post("/login", (req, res) => {
-  const { error } = loginValidation(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+router.post("/login", loginValidationRules(), validate, (req, res) => {
 
   const { email, password } = req.body;
 
