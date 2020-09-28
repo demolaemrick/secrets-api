@@ -14,7 +14,7 @@ router.post("/login", loginValidationRules(), validate, (req, res) => {
     if (!existUser) return res.status(400).json({ msg: "User not found" });
 
     bcrypt.compare(password, existUser.password).then((isMatch) => {
-      if (!isMatch) return res.status(400).json("Invalid credentials");
+      if (!isMatch) return res.status(400).json("username or password is incorrect");
       jwt.sign(
         { id: existUser._id },
         process.env.TOKEN_SECRET,
